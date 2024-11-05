@@ -56,6 +56,10 @@ class Player:
         # Check if moving to an existing tile in the grid
         if new_position in self.grid:
             next_tile = self.grid[new_position]
+        
+            if next_tile.name == "Dining Room":
+                self.block_reserved_exit(next_tile)
+                
 
             # Rotate tile to align exits
             opposite_index = Direction.opposite(direction).value
@@ -71,7 +75,7 @@ class Player:
             if (
                 self.current_tile.environment == "Indoor"
                 and next_tile.environment == "Outdoor"
-                # and not (self.current_tile.name == "Dining Room" and self.has_totem)
+                and not (self.current_tile.name == "Dining Room" and self.has_totem)
             ):
                 return False
 
@@ -113,25 +117,6 @@ class Player:
 
         print(self.localization["p_tile_drew"].format(tile=next_tile.name))
 
-        # # Restrict indoor to outdoor movement unless in Dining Room with totem
-        # if (
-        #     self.current_tile.environment == "Indoor"
-        #     and next_tile.environment == "Outdoor"
-        #     and not (self.current_tile.name == "Dining Room" and self.has_totem)
-        # ):
-        #     return False
-
-        # # Restrict outdoor to indoor movement unless via Patio when drawing a new tile
-        # if (
-        #     self.current_tile.environment == "Outdoor"
-        #     and next_tile.environment == "Indoor"
-        #     and self.current_tile.name != "Patio"
-        # ):
-        #     return False
-
-        if next_tile.name == "Dining Room":
-            self.block_reserved_exit(next_tile)
-
         
 
         self.grid[new_position] = next_tile
@@ -159,8 +144,10 @@ class Player:
     def block_reserved_exit(self, tile):
         """Blocks a specific exit of the Dining Room to reserve for the Patio tile."""
         if tile.name == "Dining Room":
+            print(f"Blocking north exit for Dining Room at position {self.position}.")
             north_index = Direction.UP.value  # Reserve the north exit for the Patio
             tile.walls[north_index] = 1  # Block the north exit
+
 
     def move_to_tile(self, tile):
         """Moves player to a specified explored tile."""

@@ -132,7 +132,7 @@ class Game:
                     break
                 else:
                     prompt = self.localization["g_draw_item_prompt_must"]
-
+                    print(prompt)
         else:
             print(self.localization["g_print_event"].format(event=event))
 
