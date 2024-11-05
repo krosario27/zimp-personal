@@ -1,0 +1,65 @@
+{
+    "time": 9,
+    "game_over": false,
+    "id_order": [
+<<<<<<< HEAD
+        9,
+        2,
+        4,
+=======
+<<<<<<< HEAD
+        3,
+        8,
+        2,
+        9
+    ],
+    "player": {
+        "health": 4,
+        "attack_points": 4,
+        "item": [
+            "Machete"
+        ],
+        "current_tile": "Storage",
+        "previous_tile": "Foyer",
+        "position": [
+            0,
+            -1
+=======
+        6,
+        1,
+>>>>>>> origin/main
+        7,
+        5,
+        6
+    ],
+    "player": {
+        "health": 8,
+        "attack_points": 1,
+        "item": [],
+        "current_tile": "Kitchen",
+        "previous_tile": "Foyer",
+        "position": [
+            0,
+<<<<<<< HEAD
+            -1
+=======
+            0
+>>>>>>> a342ea94fe1c50db6e09e79d1cc20492b7883a59
+>>>>>>> origin/main
+        ],
+        "has_totem": false
+    },
+    "grid": {
+<<<<<<< HEAD
+        "(0, 0)": "Foyer",
+        "(0, -1)": "Kitchen"
+=======
+<<<<<<< HEAD
+        "(0, 0)": "Foyer",
+        "(0, -1)": "Storage"
+=======
+        "(0, 0)": "Foyer"
+>>>>>>> a342ea94fe1c50db6e09e79d1cc20492b7883a59
+>>>>>>> origin/main
+    }
+}

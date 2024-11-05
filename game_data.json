@@ -1,0 +1,262 @@
+{
+    "tilesCard": [
+        {
+            "outDoor": [
+                {
+                    "id": 1,
+                    "name": "Garden",
+                    "wall": [
+                        0,
+                        1,
+                        0,
+                        0
+                    ],
+                    "special": "+1 Health if end turn here."
+                },
+                {
+                    "id": 2,
+                    "name": "Sitting Area",
+                    "wall": [
+                        0,
+                        1,
+                        0,
+                        0
+                    ],
+                    "special": "None"
+                },
+                {
+                    "id": 3,
+                    "name": "Yard",
+                    "wall": [
+                        0,
+                        1,
+                        0,
+                        0
+                    ],
+                    "special": "None"
+                },
+                {
+                    "id": 4,
+                    "name": "Graveyard",
+                    "wall": [
+                        1,
+                        1,
+                        0,
+                        0
+                    ],
+                    "special": "Resolve a new card to burry the totem."
+                },
+                {
+                    "id": 5,
+                    "name": "Garage",
+                    "wall": [
+                        0,
+                        1,
+                        1,
+                        0
+                    ],
+                    "special": "None"
+                },
+                {
+                    "id": 6,
+                    "name": "Patio",
+                    "wall": [
+                        1,
+                        0,
+                        0,
+                        0
+                    ],
+                    "special": "None"
+                },
+                {
+                    "id": 7,
+                    "name": "Yard",
+                    "wall": [
+                        0,
+                        1,
+                        0,
+                        0
+                    ],
+                    "special": "None"
+                },
+                {
+                    "id": 8,
+                    "name": "Yard",
+                    "wall": [
+                        0,
+                        1,
+                        0,
+                        0
+                    ],
+                    "special": "None"
+                }
+            ]
+        },
+        {
+            "inDoor": [
+                {
+                    "id": 1,
+                    "name": "Bathroom",
+                    "wall": [
+                        1,
+                        0,
+                        1,
+                        1
+                    ],
+                    "special": "None"
+                },
+                {
+                    "id": 2,
+                    "name": "Kitchen",
+                    "wall": [
+                        0,
+                        0,
+                        0,
+                        1
+                    ],
+                    "special": "+1 Health if end turn here."
+                },
+                {
+                    "id": 3,
+                    "name": "Storage",
+                    "wall": [
+                        1,
+                        0,
+                        1,
+                        1
+                    ],
+                    "special": "May draw a new card to find an item."
+                },
+                {
+                    "id": 4,
+                    "name": "Evil Temple",
+                    "wall": [
+                        0,
+                        1,
+                        0,
+                        1
+                    ],
+                    "special": "Resolve a new card to find totem."
+                },
+                {
+                    "id": 5,
+                    "name": "Family Room",
+                    "wall": [
+                        0,
+                        0,
+                        0,
+                        1
+                    ],
+                    "special": "None"
+                },
+                {
+                    "id": 6,
+                    "name": "Dining Room",
+                    "wall": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "special": "None"
+                },
+                {
+                    "id": 7,
+                    "name": "Bedroom",
+                    "wall": [
+                        0,
+                        0,
+                        1,
+                        1
+                    ],
+                    "special": "None"
+                },
+                {
+                    "id": 8,
+                    "name": "Foyer",
+                    "wall": [
+                        1,
+                        0,
+                        1,
+                        1
+                    ],
+                    "special": "None"
+                }
+            ]
+        }
+    ],
+    "devCard": [
+        {
+            "id": 1,
+            "9:00": "You try hard not to wet yourself.",
+            "10:00": "ITEM",
+            "11:00": "6 Zombies",
+            "item": "Oil",
+            "attack_points": 0
+        },
+        {
+            "id": 2,
+            "9:00": "4 Zombies",
+            "10:00": "You sense your impending doom. -1 HEALTH",
+            "11:00": "ITEM",
+            "item": "Gasoline",
+            "attack_points": 0
+        },
+        {
+            "id": 3,
+            "9:00": "ITEM",
+            "10:00": "4 Zombies",
+            "11:00": "Something icky in your mouth. -1 HEALTH",
+            "item": "Board with Nails",
+            "attack_points": 1
+        },
+        {
+            "id": 4,
+            "9:00": "4 Zombies.",
+            "10:00": "A bat poops in your eye. -1 HEALTH",
+            "11:00": "6 Zombies",
+            "item": "Machete",
+            "attack_points": 3
+        },
+        {
+            "id": 5,
+            "9:00": "ITEM",
+            "10:00": "5 Zombies.",
+            "11:00": "Your soul isn't wanted here. -1 HEALTH",
+            "item": "Grisly Femur",
+            "attack_points": 1
+        },
+        {
+            "id": 6,
+            "9:00": "Slip on nasty goo. -1 HEALTH",
+            "10:00": "4 Zombies",
+            "11:00": "The smell of blood is in the air.",
+            "item": "Golf Club",
+            "attack_points": 1
+        },
+        {
+            "id": 7,
+            "9:00": "3 Zombies",
+            "10:00": "You hear terrible screams",
+            "11:00": "5 Zombies",
+            "item": "Chainsaw",
+            "attack_points": 3
+        },
+        {
+            "id": 8,
+            "9:00": "Candybar in your pocket. +1 HEALTH",
+            "10:00": "ITEM",
+            "11:00": "4 Zombies",
+            "item": "Can of soda",
+            "attack_points": 0
+        },
+        {
+            "id": 9,
+            "9:00": "You body shivers involuntarily",
+            "10:00": "You feel a spark of hope +1 HEALTH",
+            "11:00": "4 Zombies",
+            "item": "Candle",
+            "attack_points": 0
+        }
+    ]
+}
