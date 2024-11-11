@@ -1,6 +1,7 @@
 from enums.directions import Direction
 from models.tiles import Tile
-
+from models.indoor_movement import IndoorMovement
+from models.outdoor_movement import OutdoorMovement 
 
 class Player:
     def __init__(
@@ -117,8 +118,6 @@ class Player:
 
         print(self.localization["p_tile_drew"].format(tile=next_tile.name))
 
-        
-
         self.grid[new_position] = next_tile
         self.previous_tile = self.current_tile
         self.current_tile = next_tile
@@ -132,7 +131,6 @@ class Player:
 
         self.visited_tiles.append(self.current_tile)
         return True
-
 
     def is_in_outdoor_area(self):
         """Check if the player is currently in an outdoor environment."""
