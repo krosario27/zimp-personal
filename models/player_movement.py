@@ -13,6 +13,9 @@ class PlayerMovement(ABC):
         if new_position is None:
             print("Invalid direction provided")
             return False
+        
+        print(f"Attempting to move from {self.player.current_tile.name} "
+              f"at {self.player.position} to position {new_position}")
 
         if self.is_existing_tile(new_position):
             next_tile = self.player.grid[new_position]

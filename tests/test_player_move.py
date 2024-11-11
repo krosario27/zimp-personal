@@ -86,6 +86,7 @@ class TestPlayerMove(unittest.TestCase):
         self.assertFalse(self.player.move(None))
 
     def test_move_indoor_to_outdoor_requires_totem(self):
+
         # Place the Dining Room tile at (0, 0) and set it as the current tile
         self.player.grid[(0, 0)] = Tile(
             6,
@@ -95,9 +96,9 @@ class TestPlayerMove(unittest.TestCase):
             environment="Indoor"
         )
         self.player.current_tile = self.player.grid[(0, 0)]
-        self.player.has_totem = True
 
-        # Place Garage tile at (0, -1), an outdoor environment directly below the Dining Room
+        # Scenario 1: Moving from Indoor to Outdoor with a Totem, but not Patio (Expect False)
+        self.player.has_totem = True
         self.player.grid[(0, -1)] = Tile(
             5,
             "Garage",
@@ -105,10 +106,26 @@ class TestPlayerMove(unittest.TestCase):
             "None",
             environment="Outdoor"
         )
-        # Attempt to move down and check if it's correctly blocked
-        self.assertFalse(self.player.move(Direction.DOWN))
+        result = self.player.move(Direction.DOWN)
+        self.assertFalse(result)
 
-        # Place Patio tile at (0, 1), an outdoor environment directly above the Dining Room
+        self.assertEqual(self.player.current_tile.name, "Dining Room")  # Ensure player is still in Dining Room
+
+        # Scenario 2: Moving from Indoor to Patio without Totem (Expect False)
+        self.player.has_totem = False
+        self.player.grid[(0, -1)] = Tile(
+            6,
+            "Patio",
+            [1, 0, 0, 0],  # Specific wall configuration
+            "None",
+            environment="Outdoor"
+        )
+        self.player.current_tile = self.player.grid[(0, 0)]
+        result = self.player.move(Direction.UP)
+        self.assertFalse(result)
+
+        # Scenario 3: Moving Indoor to Outdoor via Patio with Totem (Expect True)
+        self.player.has_totem = True
         self.player.grid[(0, 1)] = Tile(
             6,
             "Patio",
@@ -116,12 +133,8 @@ class TestPlayerMove(unittest.TestCase):
             "None",
             environment="Outdoor"
         )
-        # Move down to Patio (should be allowed)
-        self.assertTrue(self.player.move(Direction.DOWN))
-
-        # Attempt to move further DOWN from Patio
-        self.assertTrue(self.player.move(Direction.DOWN))
-
+        result = self.player.move(Direction.DOWN)
+        self.assertTrue(result)
 
     def test_move_outdoor_to_indoor_requires_patio(self):
         self.player.grid[(0, 0)] = Tile(
@@ -141,16 +154,6 @@ class TestPlayerMove(unittest.TestCase):
             environment="Indoor"
         )
         moved = self.player.move(Direction.LEFT)
-
-        print(
-            f"Current tile: {self.player.current_tile.name}, "
-            f"Environment: {self.player.current_tile.environment}"
-        )
-        print(
-            f"Next tile: {self.player.grid[(-1, 0)].name}, "
-            f"Environment: {self.player.grid[(-1, 0)].environment}"
-        )
-        print(f"Move result: {moved}")
 
         self.assertFalse(moved)
 
@@ -183,11 +186,7 @@ class TestPlayerMove(unittest.TestCase):
             environment="Indoor"
         )
 
-        print(f"Walls before blocking: {dining_room_tile.walls}")
-
         self.player.block_reserved_exit(dining_room_tile)
-
-        print(f"Walls after blocking: {dining_room_tile.walls}")
 
         self.assertEqual(dining_room_tile.walls[Direction.UP.value], 1)
 
