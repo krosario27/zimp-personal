@@ -4,6 +4,10 @@ from models.player import Player
 from models.tiles import IndoorTile, OutdoorTile
 from enums.directions import Direction
 import json
+from models.event_strategy import DevCardEventStrategy
+from models.health_change_strategy import HealthChangeStrategy
+from models.item_acquisition_strategy import ItemAcquisitionStrategy
+from models.zombie_fight_strategy import ZombieFightStrategy
 
 
 class Game:
@@ -73,8 +77,82 @@ class Game:
 
     # =============================================================
 
+    # def resolve_dev_card(self, card):
+    #     """Function resolves development cards"""
+    #     if self.time == 9:
+    #         event = card.activity_at_nine
+    #     elif self.time == 10:
+    #         event = card.activity_at_ten
+    #     elif self.time == 11:
+    #         event = card.activity_at_eleven
+    #     else:
+    #         return
+    #     print(event)
+
+    #     if self.player.health <= 2:
+    #         prompt = self.localization["g_cower_prompt_def"]
+    #         while True:
+    #             response = input(prompt).lower()
+    #             if response == "cower":
+    #                 self.cower()
+    #                 return
+    #             elif response == "continue":
+    #                 return
+    #             else:
+    #                 prompt = self.localization["g_cower_prompt_must"]
+
+    #     if "zombies" in event.lower():
+    #         zombies = int(event.split()[0])
+    #         prompt = self.localization["g_fight_zombie_prompt_def"].format(
+    #             zombies=zombies
+    #         )
+    #         while True:
+    #             response = input(prompt).lower()
+    #             if response == "run":
+    #                 self.run_away()
+    #                 # Deduct 1 health for running away
+    #                 self.player.modify_health(-1)
+    #                 break
+    #             elif response == "fight":
+    #                 self.item_usage()
+    #                 if not self.resolve_combat(zombies):
+    #                     self.game_over = True
+    #                 break
+    #             else:
+    #                 prompt = self.localization["g_fight_zombie_prompt_must"]
+
+    #     elif "health" in event.lower():
+    #         health_change = -1 if "-1" in event else +1
+    #         self.player.modify_health(health_change)
+
+    #     elif "item" in event.lower():
+    #         prompt = self.localization["g_draw_item_prompt_def"]
+    #         while True:
+    #             response = input(prompt).lower()
+    #             if response == "y":
+    #                 the_card = self.get_card(
+    #                     self.localization["g_get_card_prompt_item"]
+    #                 )
+    #                 print(f"The item is {the_card.item}")
+    #                 self.player.items.append(the_card.item)
+    #                 self.attack_points_update()
+    #                 break
+    #             elif response == "n":
+    #                 print(self.localization["g_no_item"])
+    #                 break
+    #             else:
+    #                 prompt = self.localization["g_draw_item_prompt_must"]
+    #                 print(prompt)
+    #     else:
+    #         print(self.localization["g_print_event"].format(event=event))
+
+    # =====================================================================
+    # =====================================================================
+
     def resolve_dev_card(self, card):
-        """Function resolves development cards"""
+        """Function resolves development cards based on the current time"""
+
+        # Retrieve the event based no the current game time
         if self.time == 9:
             event = card.activity_at_nine
         elif self.time == 10:
@@ -82,78 +160,19 @@ class Game:
         elif self.time == 11:
             event = card.activity_at_eleven
         else:
-            return
-        print(event)
-
-        if self.player.health <= 2:
-            prompt = self.localization["g_cower_prompt_def"]
-            while True:
-                response = input(prompt).lower()
-                if response == "cower":
-                    self.cower()
-                    return
-                elif response == "continue":
-                    return
-                else:
-                    prompt = self.localization["g_cower_prompt_must"]
-
+            return # Exit if time is out of games event bounds
+        
+        # Determine the appropriate strategy based on the event
         if "zombies" in event.lower():
-            zombies = int(event.split()[0])
-            prompt = self.localization["g_fight_zombie_prompt_def"].format(
-                zombies=zombies
-            )
-            while True:
-                response = input(prompt).lower()
-                if response == "run":
-                    self.run_away()
-                    # Deduct 1 health for running away
-                    self.player.modify_health(-1)
-                    break
-                elif response == "fight":
-                    self.item_usage()
-                    if not self.resolve_combat(zombies):
-                        self.game_over = True
-                    break
-                else:
-                    prompt = self.localization["g_fight_zombie_prompt_must"]
-
+            strategy = ZombieFightStrategy(self)
         elif "health" in event.lower():
-            health_change = -1 if "-1" in event else +1
-            self.player.modify_health(health_change)
-
+            strategy = HealthChangeStrategy(self)
         elif "item" in event.lower():
-            prompt = self.localization["g_draw_item_prompt_def"]
-            while True:
-                response = input(prompt).lower()
-                if response == "y":
-                    the_card = self.get_card(
-                        self.localization["g_get_card_prompt_item"]
-                    )
-                    print(f"The item is {the_card.item}")
-                    self.player.items.append(the_card.item)
-                    self.attack_points_update()
-                    break
-                elif response == "n":
-                    print(self.localization["g_no_item"])
-                    break
-                else:
-                    prompt = self.localization["g_draw_item_prompt_must"]
-                    print(prompt)
+            strategy = ItemAcquisitionStrategy(self)
         else:
-            print(self.localization["g_print_event"].format(event=event))
+            strategy = DevCardEventStrategy(self)
 
-    # =====================================================================
-    # =====================================================================
-
-
-
-
-
-
-
-
-
-
+        strategy.execute(card, event)
 
 
     def run_away(self):
