@@ -1,9 +1,8 @@
 from abc import ABC, abstractmethod
 
 class DevCardEventStrategy(ABC):
-    def __init__(self, game, card):
+    def __init__(self, game):
         self.game = game
-        self.card = card
         
     @abstractmethod
     def execute(self, player):
