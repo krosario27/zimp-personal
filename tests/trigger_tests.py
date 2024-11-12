@@ -8,12 +8,14 @@ if project_root not in sys.path:
     sys.path.append(project_root)
 
 from tests.test_player_move import TestPlayerMove
+from tests.test_player_move import TestPlayerMovementNotImplemented
 from tests.test_game_resolve_dev_card import TestGameResolveDevCard
 
 
 def suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(TestPlayerMove))
+    suite.addTest(unittest.makeSuite(TestPlayerMovementNotImplemented))
     suite.addTest(unittest.makeSuite(TestGameResolveDevCard))
     return suite
 

@@ -3,8 +3,15 @@ from unittest.mock import patch
 from models.game import Game
 from models.dev_cards import DevCards
 from models.player import Player
-from models.tiles import Tile
-from enums.directions import Direction
+from models.event_strategy import DevCardEventStrategy  # Adjust import based on file structure
+from unittest.mock import MagicMock
+# from models.tiles import Tile
+# from enums.directions import Direction
+
+class ConcreteDevCardEventStrategy(DevCardEventStrategy):
+    def execute(self, player):
+        super().execute(player)  # This should raise NotImplementedError
+
 
 class TestGameResolveDevCard(unittest.TestCase):
     def setUp(self):
@@ -33,6 +40,11 @@ class TestGameResolveDevCard(unittest.TestCase):
         self.game.load_dev_cards()
         self.player = Player(self.localization, [], [])
         self.game.player = self.player
+    
+    def test_execute_raises_not_implemented_error(self):
+        strategy = ConcreteDevCardEventStrategy(self.game)
+        with self.assertRaises(NotImplementedError):
+            strategy.execute(self.player)
 
     def test_draw_item_invalid_input(self):
         card = DevCards(

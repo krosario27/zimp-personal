@@ -6,4 +6,4 @@ class DevCardEventStrategy(ABC):
         
     @abstractmethod
     def execute(self, player):
-        pass
+        raise NotImplementedError("This method should be overridden in a subclass")
