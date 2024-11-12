@@ -319,7 +319,7 @@ class TestPlayerMove(unittest.TestCase):
         self.assertEqual(self.player.current_tile.name, "Yard")
 
         self.player.outdoor_tiles.clear()
-        
+
         moved = self.player.move(Direction.LEFT)
    
         # Verify that the move was unsuccessful and the player remains on the current tile

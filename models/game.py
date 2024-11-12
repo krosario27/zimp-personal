@@ -67,6 +67,12 @@ class Game:
             self.time += 1
             print(self.localization["g_time_updated"].format(time=self.time))
 
+    # =============================================================
+
+    # TARGET BLOCK OF CODE (BELOW)
+
+    # =============================================================
+
     def resolve_dev_card(self, card):
         """Function resolves development cards"""
         if self.time == 9:
@@ -135,6 +141,8 @@ class Game:
                     print(prompt)
         else:
             print(self.localization["g_print_event"].format(event=event))
+
+    # =====================================================================
 
     def run_away(self):
         """Allows player to run away to any previously explored tile"""

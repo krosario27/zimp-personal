@@ -4,8 +4,8 @@ from enums.directions import Direction
 
 class PlayerMovement(ABC):
     def __init__(self, player, direction):
-        self.player = player
-        self.direction = direction
+        self._player = player       # Use _player to suggest protected access
+        self._direction = direction # Use _direction to suggest protected access
 
     # Template Method
     def move(self):
@@ -15,39 +15,40 @@ class PlayerMovement(ABC):
             return False
 
         if self.is_existing_tile(new_position):
-            next_tile = self.player.grid[new_position]
-            if not self.prepare_next_tile(next_tile):
+            next_tile = self._player.grid[new_position]
+            if not self._prepare_next_tile(next_tile):
                 return False
             return self.update_position(new_position, next_tile)
+
         next_tile = self.draw_new_tile()
         if not next_tile:
             return False
-        self.player.grid[new_position] = next_tile
+        self._player.grid[new_position] = next_tile
         return self.update_position(new_position, next_tile)
 
     def calculate_new_position(self):
         """Calculate new position based on direction."""
-        x, y = self.player.position
+        x, y = self._player.position
         return {
             Direction.LEFT: (x - 1, y),
             Direction.UP: (x, y + 1),
             Direction.RIGHT: (x + 1, y),
             Direction.DOWN: (x, y - 1),
-        }.get(self.direction)
+        }.get(self._direction)
 
     def is_existing_tile(self, new_position):
         """Check if the tile already exists in the grid."""
-        return new_position in self.player.grid
+        return new_position in self._player.grid
 
-    def prepare_next_tile(self, next_tile):
-        """Check if the tile already exists in the grid."""
-        if not self.align_exits(next_tile):
+    def _prepare_next_tile(self, next_tile):
+        """Prepare the next tile before moving the player."""
+        if not self._align_exits(next_tile):
             return False
-        return self.check_environment(next_tile)
+        return self.check_environment(next_tile)  # check_environment remains public
 
-    def align_exits(self, next_tile):
+    def _align_exits(self, next_tile):
         """Rotate tile to align exits."""
-        opposite_index = Direction.opposite(self.direction).value
+        opposite_index = Direction.opposite(self._direction).value
         for _ in range(4):
             if next_tile.walls[opposite_index] == 0:
                 print(f"Aligned exits for movement to {next_tile.name}")
@@ -63,20 +64,21 @@ class PlayerMovement(ABC):
 
     def update_position(self, new_position, next_tile):
         """Update player position and move them to the new tile."""
-        self.player.previous_tile = self.player.current_tile
-        self.player.current_tile = next_tile
-        self.player.position = new_position
+        self._player.previous_tile = self._player.current_tile
+        self._player.current_tile = next_tile
+        self._player.position = new_position
         print(
-            self.player.localization["p_player_moved_from_to"].format(
-                direction=self.direction.name.lower(),
-                current_tile=self.player.current_tile.name,
+            self._player.localization["p_player_moved_from_to"].format(
+                direction=self._direction.name.lower(),
+                current_tile=self._player.current_tile.name,
             )
         )
-        self.player.print_exits()
-        self.player.visited_tiles.append(self.player.current_tile)
+        self._player.print_exits()
+        self._player.visited_tiles.append(self._player.current_tile)
         return True
 
     @abstractmethod
     def draw_new_tile(self):
         """Draw a new tile. To be overridden by subclasses."""
         raise NotImplementedError
+
