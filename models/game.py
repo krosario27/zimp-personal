@@ -150,6 +150,13 @@ class Game:
     # =====================================================================
     # =====================================================================
 
+
+
+    # =============================================================
+
+    # STRATEGY PATTERN IMPLEMENTATION
+
+    # =============================================================
     def resolve_dev_card(self, card):
         """Function resolves development cards based on the current time"""
 
@@ -180,6 +187,8 @@ class Game:
             strategy = GenericEventStrategy(self)
 
         strategy.execute(card, event)
+
+    # =============================================================
 
 
     def run_away(self):
