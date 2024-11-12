@@ -6,8 +6,11 @@ class OutdoorMovement(PlayerMovement):
         # Allow movement to outdoor or patio tiles, restrict others
         if next_tile.environment == "Outdoor":
             return True
-        elif next_tile.name == "Patio":
+        
+        if self.player.current_tile.name == "Patio" \
+            and next_tile.environment == "Indoor":
             return True
+        
         print("Movement from outdoor to indoor"
               "not allowed except through Patio.")
         return False

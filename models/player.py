@@ -45,9 +45,9 @@ class Player:
     #     x, y = self.position  # Extracts current position coordinates
     #     new_position = {
     #         Direction.LEFT: (x - 1, y),
-    #         Direction.UP: (x, y - 1),
+    #         Direction.UP: (x, y + 1),
     #         Direction.RIGHT: (x + 1, y),
-    #         Direction.DOWN: (x, y + 1),
+    #         Direction.DOWN: (x, y - 1),
     #     }.get(direction)
 
     #     if new_position is None:
@@ -72,14 +72,17 @@ class Player:
     #         if next_tile.walls[opposite_index] == 1:
     #             return False
 
-    #         # Restrict indoor to outdoor movement unless in Dining Room with totem
     #         if (
-    #             self.current_tile.environment == "Indoor"
-    #             and next_tile.environment == "Outdoor"
-    #             and not (self.current_tile.name == "Dining Room" and self.has_totem)
+    #             self.current_tile.environment == "Indoor" and
+    #             next_tile.environment == "Outdoor"
     #         ):
+    #             # Allow only if moving to "Patio" and player has the totem
+    #             if next_tile.name == "Patio" and self.has_totem:
+    #                 return True
+    #             print("Cannot move from indoor to outdoor"
+    #                 "without a valid exit (e.g., Patio).")
     #             return False
-
+            
     #         # Restrict outdoor to indoor movement unless via Patio
     #         if (
     #             self.current_tile.environment == "Outdoor"
