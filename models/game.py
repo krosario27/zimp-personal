@@ -8,6 +8,7 @@ from models.generic_event_strategy import GenericEventStrategy
 from models.health_change_strategy import HealthChangeStrategy
 from models.item_acquisition_strategy import ItemAcquisitionStrategy
 from models.zombie_fight_strategy import ZombieFightStrategy
+from models.low_health_strategy import LowHealthStrategy
 
 
 class Game:
@@ -161,6 +162,12 @@ class Game:
             event = card.activity_at_eleven
         else:
             return # Exit if time is out of games event bounds
+        
+        # If player health is critical
+        if self.player.health <= 2:
+            strategy = LowHealthStrategy(self)
+            strategy.execute(card, event)
+            return
         
         # Determine the appropriate strategy based on the event
         if "zombies" in event.lower():
