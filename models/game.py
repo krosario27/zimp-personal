@@ -4,7 +4,7 @@ from models.player import Player
 from models.tiles import IndoorTile, OutdoorTile
 from enums.directions import Direction
 import json
-from models.event_strategy import DevCardEventStrategy
+from models.generic_event_strategy import GenericEventStrategy
 from models.health_change_strategy import HealthChangeStrategy
 from models.item_acquisition_strategy import ItemAcquisitionStrategy
 from models.zombie_fight_strategy import ZombieFightStrategy
@@ -170,7 +170,7 @@ class Game:
         elif "item" in event.lower():
             strategy = ItemAcquisitionStrategy(self)
         else:
-            strategy = DevCardEventStrategy(self)
+            strategy = GenericEventStrategy(self)
 
         strategy.execute(card, event)
 
