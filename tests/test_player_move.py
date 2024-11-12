@@ -51,7 +51,7 @@ class TestPlayerMove(unittest.TestCase):
         self.player.grid[(0, 0)] = Tile(
             8,
             "Foyer",
-            [1, 0, 1, 1],  # Assuming Foyer has exits open to the right for movement
+            [1, 0, 1, 1],  
             "None",
             environment="Indoor"
         )

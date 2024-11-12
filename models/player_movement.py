@@ -4,8 +4,8 @@ from enums.directions import Direction
 
 class PlayerMovement(ABC):
     def __init__(self, player, direction):
-        self._player = player       # Use _player to suggest protected access
-        self._direction = direction # Use _direction to suggest protected access
+        self._player = player       
+        self._direction = direction 
 
     # Template Method
     def move(self):

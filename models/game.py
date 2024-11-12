@@ -143,6 +143,18 @@ class Game:
             print(self.localization["g_print_event"].format(event=event))
 
     # =====================================================================
+    # =====================================================================
+
+
+
+
+
+
+
+
+
+
+
 
     def run_away(self):
         """Allows player to run away to any previously explored tile"""

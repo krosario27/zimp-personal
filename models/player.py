@@ -42,103 +42,103 @@ class Player:
     # TARGET BLOCK OF CODE
 
     # ========================================================================
-    def move(self, direction):
-        """
-        Handles player movement. Checks for player position, rotates tile walls to connect
-        with the current room, and checks for movement validity.
-        """
-        x, y = self.position  # Extracts current position coordinates
-        new_position = {
-            Direction.LEFT: (x - 1, y),
-            Direction.UP: (x, y + 1),
-            Direction.RIGHT: (x + 1, y),
-            Direction.DOWN: (x, y - 1),
-        }.get(direction)
+    # def move(self, direction):
+    #     """
+    #     Handles player movement. Checks for player position, rotates tile walls to connect
+    #     with the current room, and checks for movement validity.
+    #     """
+    #     x, y = self.position  # Extracts current position coordinates
+    #     new_position = {
+    #         Direction.LEFT: (x - 1, y),
+    #         Direction.UP: (x, y + 1),
+    #         Direction.RIGHT: (x + 1, y),
+    #         Direction.DOWN: (x, y - 1),
+    #     }.get(direction)
 
-        if new_position is None:
-            print("Invalid direction provided.")
-            return False
+    #     if new_position is None:
+    #         print("Invalid direction provided.")
+    #         return False
 
-        # Check if moving to an existing tile in the grid
-        if new_position in self.grid:
-            next_tile = self.grid[new_position]
+    #     # Check if moving to an existing tile in the grid
+    #     if new_position in self.grid:
+    #         next_tile = self.grid[new_position]
         
-            if next_tile.name == "Dining Room":
-                self.block_reserved_exit(next_tile)
+    #         if next_tile.name == "Dining Room":
+    #             self.block_reserved_exit(next_tile)
                 
 
-            # Rotate tile to align exits
-            opposite_index = Direction.opposite(direction).value
-            for _ in range(4):
-                if next_tile.walls[opposite_index] == 0:
-                    break
-                next_tile.rotate()
+    #         # Rotate tile to align exits
+    #         opposite_index = Direction.opposite(direction).value
+    #         for _ in range(4):
+    #             if next_tile.walls[opposite_index] == 0:
+    #                 break
+    #             next_tile.rotate()
 
-            if next_tile.walls[opposite_index] == 1:
-                return False
+    #         if next_tile.walls[opposite_index] == 1:
+    #             return False
 
-            if (
-                self.current_tile.environment == "Indoor" and
-                next_tile.environment == "Outdoor"
-            ):
-                # Allow only if moving to "Patio" and player has the totem
-                if next_tile.name == "Patio" and self.has_totem:
-                    return True
-                print("Cannot move from indoor to outdoor"
-                    "without a valid exit (e.g., Patio).")
-                return False
+    #         if (
+    #             self.current_tile.environment == "Indoor" and
+    #             next_tile.environment == "Outdoor"
+    #         ):
+    #             # Allow only if moving to "Patio" and player has the totem
+    #             if next_tile.name == "Patio" and self.has_totem:
+    #                 return True
+    #             print("Cannot move from indoor to outdoor"
+    #                 "without a valid exit (e.g., Patio).")
+    #             return False
             
-            # Restrict outdoor to indoor movement unless via Patio
-            if (
-                self.current_tile.environment == "Outdoor"
-                and next_tile.environment == "Indoor"
-                and self.current_tile.name != "Patio"
-            ):
-                return False
+    #         # Restrict outdoor to indoor movement unless via Patio
+    #         if (
+    #             self.current_tile.environment == "Outdoor"
+    #             and next_tile.environment == "Indoor"
+    #             and self.current_tile.name != "Patio"
+    #         ):
+    #             return False
 
-            self.previous_tile = self.current_tile
-            self.current_tile = next_tile
-            self.position = new_position  # Updates player position
-            print(
-                self.localization["p_player_moved_from_to"].format(
-                    direction=direction.name.lower(),
-                    current_tile=self.current_tile.name,
-                )
-            )
-            self.print_exits()
-            return True
+    #         self.previous_tile = self.current_tile
+    #         self.current_tile = next_tile
+    #         self.position = new_position  # Updates player position
+    #         print(
+    #             self.localization["p_player_moved_from_to"].format(
+    #                 direction=direction.name.lower(),
+    #                 current_tile=self.current_tile.name,
+    #             )
+    #         )
+    #         self.print_exits()
+    #         return True
 
-        # Drawing a new tile
-        if self.is_in_outdoor_area():
-            next_tile = self.get_next_outdoor_tile()
-        else:
-            next_tile = self.get_next_indoor_tile()
+    #     # Drawing a new tile
+    #     if self.is_in_outdoor_area():
+    #         next_tile = self.get_next_outdoor_tile()
+    #     else:
+    #         next_tile = self.get_next_indoor_tile()
 
-        if not next_tile:
-            print(self.localization["p_player_tile_no"])
-            print(
-                self.localization["p_player_moved_from_to"].format(
-                    direction=direction.name.lower(),
-                    current_tile=self.current_tile.name,
-                )
-            )
-            return False
+    #     if not next_tile:
+    #         print(self.localization["p_player_tile_no"])
+    #         print(
+    #             self.localization["p_player_moved_from_to"].format(
+    #                 direction=direction.name.lower(),
+    #                 current_tile=self.current_tile.name,
+    #             )
+    #         )
+    #         return False
 
-        print(self.localization["p_tile_drew"].format(tile=next_tile.name))
+    #     print(self.localization["p_tile_drew"].format(tile=next_tile.name))
 
-        self.grid[new_position] = next_tile
-        self.previous_tile = self.current_tile
-        self.current_tile = next_tile
-        self.position = new_position
-        print(
-            self.localization["p_player_moved_from_to"].format(
-                direction=direction.name.lower(), current_tile=self.current_tile.name
-            )
-        )
-        self.print_exits()
+    #     self.grid[new_position] = next_tile
+    #     self.previous_tile = self.current_tile
+    #     self.current_tile = next_tile
+    #     self.position = new_position
+    #     print(
+    #         self.localization["p_player_moved_from_to"].format(
+    #             direction=direction.name.lower(), current_tile=self.current_tile.name
+    #         )
+    #     )
+    #     self.print_exits()
 
-        self.visited_tiles.append(self.current_tile)
-        return True
+    #     self.visited_tiles.append(self.current_tile)
+    #     return True
 
     # ========================================================================
 
@@ -148,11 +148,11 @@ class Player:
 
     # ========================================================================
 
-    # def move(self, direction):
-    #     movement_class = IndoorMovement \
-    #         if self.current_tile.environment == "Indoor" else OutdoorMovement
-    #     movement = movement_class(self, direction)
-    #     return movement.move() # Client calls the move template method in abstract class
+    def move(self, direction):
+        movement_class = IndoorMovement \
+            if self.current_tile.environment == "Indoor" else OutdoorMovement
+        movement = movement_class(self, direction)
+        return movement.move() # Client calls the move template method in abstract class
     
     # ========================================================================
 
